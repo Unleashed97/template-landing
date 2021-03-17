@@ -60,7 +60,17 @@ const server = () => {
 // image minify
 const images = () =>{
     return src('src/images/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}')
-        .pipe(imagemin())
+        .pipe(imagemin([
+            imagemin.gifsicle({interlaced: true}),
+            imagemin.mozjpeg({quality: 75, progressive: true}),
+            imagemin.optipng({optimizationLevel: 5}),
+            imagemin.svgo({
+                plugins: [
+                    {removeViewBox: true},
+                    {cleanupIDs: false}
+                ]
+            })
+        ]))
         .pipe(dest('dist/images/'))
         .pipe(sync.stream())
 }
