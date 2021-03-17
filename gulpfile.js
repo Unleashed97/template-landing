@@ -72,18 +72,6 @@ const fonts = () =>{
         .pipe(sync.stream())
 }
 
-// Copy
-const copy = () => {
-    return src([
-        'src/fonts/**/*',
-        'src/images/**/*'
-    ], {
-        base: 'src'
-    })
-        .pipe(dest('dist/'))
-        .pipe(sync.stream());
-}
-
 // cleandist
 const cleandist = () => {
     return del('dist/**/*', { force: true })
@@ -99,7 +87,7 @@ const watchFiles = () => {
     watch('src/**/*.html').on('change', sync.reload);
 }
 
-const build = series(cleandist, parallel(html, styles, scripts, images));
+const build = series(cleandist, parallel(html, styles, scripts, images, fonts));
 const watcher = parallel(build, watchFiles, server);
 
 
@@ -108,8 +96,8 @@ exports.server = server;
 exports.html = html;
 exports.scripts = scripts;
 exports.styles = styles;
-exports.copy = copy;
 exports.images = images;
+exports.fonts = fonts;
 exports.cleandist = cleandist;
 exports.build = build;
 exports.default = watcher;
