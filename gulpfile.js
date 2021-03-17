@@ -10,6 +10,7 @@ const cleancss = require('gulp-clean-css');
 const del = require('del');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
+const newer = require('gulp-newer');
 const rename = require('gulp-rename');
 
 // HTML
@@ -60,6 +61,7 @@ const server = () => {
 // image minify
 const images = () =>{
     return src('src/images/**/*.{jpg,png,svg,gif,ico,webp,webmanifest,xml,json}')
+        .pipe(newer('dist/images/'))
         .pipe(imagemin([
             imagemin.gifsicle({interlaced: true}),
             imagemin.mozjpeg({quality: 75, progressive: true}),
