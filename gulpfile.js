@@ -80,7 +80,7 @@ const images = () =>{
 // fonts
 const fonts = () =>{
     return src('src/fonts/**/*.{eot,woff,woff2,ttf,svg}')
-        .pipe(dest('/dist/fonts/'))
+        .pipe(dest('dist/fonts/'))
         .pipe(sync.stream())
 }
 
